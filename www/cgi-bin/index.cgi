@@ -4,15 +4,19 @@ use strict;
 
 BEGIN {
   push @INC, '../../modules/';
+  push @INC, '../../lib/';
 }
 
 use Template;
 use Magazines::Webinterface;
+use Base;
+use Data::Dumper;
 
 print "Content-type: text/html\n\n";
 
-our(%CONFIG);
+our (%FORM, %CONFIG);
 
+%FORM = Base::parse_form();
 do "../../data/config.pl";
 
 # some useful options (see below for full list)
@@ -30,4 +34,6 @@ my $template = Template->new($template_config);
 
 my $magazines_ = Magazines::Webinterface::magazines_test();
 
-$template->process('main.html', { USER => $magazines_});
+$template->process('main.html', {
+    USER => $magazines_
+});
