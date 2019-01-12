@@ -1,7 +1,13 @@
 #!/usr/bin/perl
 use warnings;
 use strict;
+
+BEGIN {
+  push @INC, '../../modules/';
+}
+
 use Template;
+use Magazines::Webinterface;
 
 print "Content-type: text/html\n\n";
 
@@ -21,5 +27,7 @@ my $template_config = {
 
 # create Template object
 my $template = Template->new($template_config);
-$template->process('main.html',);
 
+my $magazines_ = Magazines::Webinterface::magazines_test();
+
+$template->process('main.html', { USER => $magazines_});
