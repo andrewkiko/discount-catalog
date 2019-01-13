@@ -32,8 +32,8 @@ my $template_config = {
 # create Template object
 my $template = Template->new($template_config);
 
-my $magazines_ = Magazines::Webinterface::magazines_test();
+my $magazines_ = Magazines::Webinterface::magazines_list({%FORM});
 
 $template->process('main.html', {
-    USER => $magazines_
+    MAGAZINES_CARDS => $magazines_
 });
