@@ -1,4 +1,4 @@
-GRANT ALL ON dc.* TO `discount_catalog`@'%' IDENTIFIED BY "dc";
+GRANT ALL ON discount_catalog.* TO `dc`@'%' IDENTIFIED BY "dc";
 CREATE DATABASE discount_catalog;
 flush privileges;
 
