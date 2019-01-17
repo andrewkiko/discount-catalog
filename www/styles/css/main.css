@@ -1,0 +1,14 @@
+/*Styles for all project*/
+.background_default {
+  background: linear-gradient(to right, rgb(96, 56, 19), rgb(178, 159, 148));
+}
+.background-1 {
+  background: linear-gradient(to right, rgb(99, 99, 99), rgb(162, 171, 88));
+}
+.background-2 {
+  background: linear-gradient(to right, rgb(76, 37, 99), rgb(171, 43, 27));
+}
+.background-3 {
+  background: url(https://demo.abills.net.ua:9443/styles/lte_adm/dist/img/boxed-bg.jpg);
+
+}
