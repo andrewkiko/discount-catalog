@@ -4,9 +4,9 @@ use warnings FATAL => 'all';
 
 use DBI;
 
-my $dsn = 'DBI:mysql:test:localhost';
-my $db_user_name = 'test';
-my $db_password = 'test';
+my $dsn = 'DBI:mysql:discount_catalog:localhost';
+my $db_user_name = 'dc';
+my $db_password = 'dc';
 my $dbh = DBI->connect($dsn, $db_user_name, $db_password);
 
 #**********************************************************
