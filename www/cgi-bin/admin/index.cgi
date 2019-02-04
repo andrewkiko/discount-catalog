@@ -49,6 +49,22 @@ else{
 
 print "Content-type: text/html\n\n";
 
-$template->process('dashboard.html', {});
+
+my %TEMPLATE_ARGS = ();
+if($FORM{test} == 1){
+  my $magazines_web = Magazines::Webinterface::magazines_web({%FORM});
+  $TEMPLATE_ARGS{MAGAZINES_WEB} = $magazines_web;
+  $TEMPLATE_ARGS{ACTIVE_1} = 'active';
+}
+elsif($FORM{test} == 2){
+  my $chat = '';
+  $template->process('chat.html', {}, \$chat);
+  $TEMPLATE_ARGS{CHAT} = $chat;
+  $TEMPLATE_ARGS{ACTIVE_2} = 'active';
+}
+
+$template->process('dashboard.html', {
+  %TEMPLATE_ARGS
+  });
 
 exit;

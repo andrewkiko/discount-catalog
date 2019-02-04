@@ -70,6 +70,6 @@ sub get_cookie {
 #**********************************************************
 sub set_cookie {
   my ($attr) = @_;
-  print "Set-Cookie: sid=$attr->{sid}; path=admin/; expires=Wed, 01-Jun-2005 23:00:00;\n";
+  print "Set-Cookie: sid=$attr->{sid}; path=admin/;\n";
 }
 1;
