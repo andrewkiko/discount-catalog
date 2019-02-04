@@ -1,0 +1,37 @@
+
+<script>
+  var socket    = new WebSocket("ws://192.168.1.110:3000/pub/test");
+  socket.onopen = function () {
+//    alert("Соединение установлено.");
+    socket.send('hello');
+  };
+
+  window.onload = function () {
+    document.getElementById("message_text").onkeydown = function (e) {
+      if (e.keyCode == 13 && e.ctrlKey) { // keyCode 13 is Enter
+        document.getElementById("button_send").click();
+        // alert(e.keyCode); // to know other keyCodes of each keys
+        return false; // preventing default action
+      }
+    };
+  }
+
+  function send_form_func() {
+    console.log("TEST SENT");
+//    jQuery("#theForm").ajaxForm({url: 'ws://192.168.1.110:3000/pub/test', type: 'post'});
+    var val                                       = jQuery.trim(jQuery("#message_text").val());
+    document.getElementById('message_text').value = "";
+    socket.send(val);
+    console.log("TEST SENT 1");
+  }
+</script>
+
+
+
+<form id="theForm">
+  <div class="form-group">
+    <label for="exampleFormControlTextarea1">Example textarea</label>
+    <textarea class="form-control" name="test" id="message_text" rows="3"></textarea>
+  </div>
+  <input value="Отправить" id="button_send" type="button" class="btn btn-primary" onclick="send_form_func()">
+</form>
