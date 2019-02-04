@@ -1,7 +1,25 @@
+<script>
+  var socket    = new WebSocket("ws://192.168.1.110:3000/sub/test");
+  socket.onopen = function () {
+//    alert("Соединение установлено.");
+    socket.onmessage = function (event) {
+//      alert(event.data);
+      new Noty({
+        text   : event.data,
+        type   : "info",
+        timeout: 666,
+        layout : 'topRight',
+        theme  : 'mint'
+      }).show();
+      console.log(event.data);
+    }
+  };
+</script>
+
 <div class="container">
 
 
-    [% MAGAZINES_CARDS %]
+  [% MAGAZINES_CARDS %]
 
 
 </div>
