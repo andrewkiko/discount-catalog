@@ -1,0 +1,45 @@
+
+<script>
+  var socket    = new WebSocket("ws://192.168.1.110:3000/bus/test");
+  socket.onopen = function () {
+    socket.onmessage = function (event) {
+//      alert(event.data);
+      new Noty({
+        text   : event.data,
+        type   : "info",
+        timeout: 1000,
+        layout : 'bottomLeft',
+        theme  : 'mint'
+      }).show();
+      console.log(event.data);
+    }
+    socket.send('hello [% SPEAKER %]');
+  };
+
+  window.onload = function () {
+    document.getElementById("message_text").onkeydown = function (e) {
+      if (e.keyCode == 13 && e.ctrlKey) { // keyCode 13 is Enter
+        document.getElementById("button_send").click();
+        return false; // preventing default action
+      }
+    };
+  };
+
+  function send_form_func() {
+    console.log("TEST SENT");
+    var val = jQuery.trim(jQuery("#message_text").val());
+    document.getElementById('message_text').value = "";
+    socket.send(val);
+    console.log("TEST SENT 1");
+  }
+</script>
+
+
+
+<form id="theForm">
+  <div class="form-group">
+    <label for="exampleFormControlTextarea1">Example textarea</label>
+    <textarea class="form-control" name="test" id="message_text" rows="3"></textarea>
+  </div>
+  <input value="Отправить" id="button_send" type="button" class="btn btn-primary" onclick="send_form_func()">
+</form>

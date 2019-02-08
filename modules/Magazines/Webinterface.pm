@@ -38,6 +38,21 @@ sub magazines_list {
   $magazines_card .= "</div>";
   return $magazines_card
 }
+
+#**********************************************************
+=head2 magazines_web()
+
+  Arguments:
+     -
+    
+  Returns:
+  
+=cut
+#**********************************************************
+sub magazines_web {
+  return "Hello world";
+}
+
 1;
 
 #<h5 class="card-title">$magazine->{name}</h5>
