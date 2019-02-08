@@ -10,5 +10,7 @@
 }
 .background-3 {
   background: url(https://demo.abills.net.ua:9443/styles/lte_adm/dist/img/boxed-bg.jpg);
-
+}
+#slider-banner-section {
+  background-color: #343a40;
 }
