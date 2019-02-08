@@ -58,7 +58,7 @@ if($FORM{test} == 1){
 }
 elsif($FORM{test} == 2){
   my $chat = '';
-  $template->process('chat.html', {}, \$chat);
+  $template->process('chat.html', { SPEAKER => 'user'}, \$chat);
   $TEMPLATE_ARGS{CHAT} = $chat;
   $TEMPLATE_ARGS{ACTIVE_2} = 'active';
 }
