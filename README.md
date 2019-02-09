@@ -19,5 +19,6 @@ mysql < discount_catalog/misc/programms/mysql/mysql.sql
 
 
 ### Запуск weboscket
-mercury broker -l http://[% IP %]:3000
-IP - адрес виртуалки куда будет подключаться ws
+```mercury broker -l http://[% IP %]:3000```
+
+**[% IP %]** - адрес виртуалки куда будет подключаться ws
