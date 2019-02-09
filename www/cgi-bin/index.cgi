@@ -39,7 +39,7 @@ my $template_chat = Template->new({
     INCLUDE_PATH => '../../main_templates', # or list ref
     INTERPOLATE  => 1,             # expand "$var" in plain text
      });
-    $template_chat->process('chat.html', { SPEAKER => 'admin'}, \$chat);
+    $template_chat->process('chat.html', { SPEAKER => 'admin', CHAT_IP => $CONFIG{CHAT_IP}}, \$chat);
 
 
 $template->process('main.html', {

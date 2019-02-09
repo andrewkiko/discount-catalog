@@ -5,6 +5,5 @@
   DB_NAME     => 'discount_catalog',
   DB_USER     => 'dc',
   DB_PASSWORD => 'dc',
-  
-  
+  CHAT_IP     => '192.168.1.112'
 );

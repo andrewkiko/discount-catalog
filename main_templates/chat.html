@@ -1,6 +1,6 @@
 
 <script>
-  var socket    = new WebSocket("ws://192.168.1.110:3000/bus/test");
+  var socket    = new WebSocket("ws://[% CHAT_IP %]:3000/bus/test");
   socket.onopen = function () {
     socket.onmessage = function (event) {
 //      alert(event.data);
