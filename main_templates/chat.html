@@ -4,15 +4,17 @@
   socket.onopen = function () {
     socket.onmessage = function (event) {
 //      alert(event.data);
+      var div_chat = document.getElementById('chat_body');
+      div_chat.innerHTML += "<div style='align:right;'>" + event.data + "</div>";
       new Noty({
         text   : event.data,
         type   : "info",
-//        timeout: 5000,
+        timeout: 500,
         layout : 'bottomLeft',
         theme  : 'mint'
       }).show();
       console.log(event.data);
-    }
+    };
     socket.send('hello [% SPEAKER %]');
   };
 
@@ -31,12 +33,16 @@
     document.getElementById('message_text').value = "";
     socket.send(val);
     console.log("TEST SENT 1");
+    var div_chat = document.getElementById('chat_body');
+    div_chat.innerHTML += "<div style='align:left;'>" + val + "</div>";
+    console.log("Add text to chat body");
   }
 </script>
 
 
 
 <form id="theForm">
+  <div id="chat_body"></div>
   <div class="form-group">
     <label for="exampleFormControlTextarea1">Example textarea</label>
     <textarea class="form-control" name="test" id="message_text" rows="3"></textarea>
