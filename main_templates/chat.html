@@ -1,11 +1,20 @@
 
 <script>
+    function scrollToBottom(div_chat) {
+        div_chat.scrollTop = div_chat.scrollHeight;
+    }
+
   var socket    = new WebSocket("ws://[% CHAT_IP %]:3000/bus/test");
   socket.onopen = function () {
     socket.onmessage = function (event) {
 //      alert(event.data);
       var div_chat = document.getElementById('chat_body');
-      div_chat.innerHTML += "<div style='align:right;'>" + event.data + "</div>";
+      console.log(div_chat);
+      div_chat.innerHTML += "<p class=\"text-right\" style=\"font-size:160%;\">" + event.data + "</p>";
+      shouldScroll = div_chat.scrollTop + div_chat.clientHeight === div_chat.scrollHeight;
+        if (!shouldScroll) {
+            scrollToBottom(div_chat);
+        }
       new Noty({
         text   : event.data,
         type   : "info",
@@ -34,7 +43,11 @@
     socket.send(val);
     console.log("TEST SENT 1");
     var div_chat = document.getElementById('chat_body');
-    div_chat.innerHTML += "<div style='align:left;'>" + val + "</div>";
+    div_chat.innerHTML += "<p class=\"text-left\" style=\"font-size:160%;\">" + val + "</p>";
+      shouldScroll = div_chat.scrollTop + div_chat.clientHeight === div_chat.scrollHeight;
+      if (!shouldScroll) {
+          scrollToBottom(div_chat);
+      }
     console.log("Add text to chat body");
   }
 </script>
@@ -42,10 +55,9 @@
 
 
 <form id="theForm">
-  <div id="chat_body"></div>
+  <div id="chat_body" style="height: 300px; overflow-y: auto; border: 4px double black; background: rgb(194,189,255);"></div>
   <div class="form-group">
-    <label for="exampleFormControlTextarea1">Example textarea</label>
-    <textarea class="form-control" name="test" id="message_text" rows="3"></textarea>
+    <textarea class="form-control" name="test" id="message_text" rows="3" ></textarea>
   </div>
   <input value="Отправить" id="button_send" type="button" class="btn btn-primary" onclick="send_form_func()">
 </form>
