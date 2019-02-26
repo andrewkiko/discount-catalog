@@ -6,6 +6,7 @@
     background-color: #f1f1f1;
     border: 1px solid #d3d3d3;
     text-align: center;
+    right: 10px;
   }
 
   #mydivheader {
@@ -35,6 +36,26 @@
     -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
     background-color: #bfbfbf;
   }
+
+  .chat-text-left {
+    border-radius: 5px;
+    position: relative;
+    padding: 5px 10px;
+    background: #d2d6de;
+    border: 1px solid #d2d6de;
+    margin: 5px 5px 0 5px;
+    color: #444;
+  }
+
+  .chat-text-right {
+    border-radius: 5px;
+    position: relative;
+    padding: 5px 10px;
+    background: #a4f5f2;
+    border-color: #a4f5f2;
+    margin: 5px 0 0 5px;
+  }
+
 </style>
 
 <script>
@@ -86,17 +107,19 @@
     div_chat.scrollTop = div_chat.scrollHeight;
   }
 
-  var socket    = new WebSocket("ws://[% CHAT_IP %]:3000/bus/test");
+  var socket    = new WebSocket("ws://[% CHAT_IP %]:3000/bus/[% RANDOM_CHAT %]");
   socket.onopen = function () {
     socket.onmessage = function (event) {
-//      alert(event.data);
       var div_chat = document.getElementById('chat_body');
-      console.log(div_chat);
-      div_chat.innerHTML += "<p class=\"text-right\" style=\"color: #0F5059; font-size:100%;width:\">" + event.data + "</p>";
+      console.log("Something came in chat. Should save it!");
+
+      div_chat.innerHTML += "<p class=\"chat-text-right text-right\">" + "<span class=\"chat-text\">" + event.data + "</span>" + "</p>";
       shouldScroll = div_chat.scrollTop + div_chat.clientHeight === div_chat.scrollHeight;
+
       if (!shouldScroll) {
         scrollToBottom(div_chat);
       }
+
       new Noty({
         text   : event.data,
         type   : "info",
@@ -114,16 +137,30 @@
           })
         ]
       }).show();
-      console.log(event.data);
     };
     socket.send('hello [% SPEAKER %]');
   };
 
+  jQuery(document).ready(function() {
+    jQuery("#hide").click(function(e) {
+      console.log("Test Hide Chat");
+      jQuery("#hide_chat").toggle();
+      e.stopPropagation();
+    });
+
+    jQuery(document).click(function(e) {
+      if (jQuery(e.target).is('#hide')) {
+        jQuery("#hide_chat").hide();
+      }
+    });
+  });
+
   window.onload = function () {
     // Make the DIV element draggable:
     dragElement(document.getElementById('mydiv'));
+
     document.getElementById("message_text").onkeydown = function (e) {
-      if (e.keyCode == 13) { // keyCode 13 is Enter  && e.ctrlKey
+      if (e.keyCode == 13 && e.ctrlKey) { // keyCode 13 is Enter
         document.getElementById("button_send").click();
         return false; // preventing default action
       }
@@ -131,14 +168,16 @@
   };
 
   function send_form_func() {
-    console.log("TEST SENT");
-    var val                                       = jQuery.trim(jQuery("#message_text").val());
+    console.log("Sending chat message");
+    var val = jQuery.trim(jQuery("#message_text").val());
+    var div_chat = document.getElementById('chat_body');
+
     document.getElementById('message_text').value = "";
     socket.send(val);
-    console.log("TEST SENT 1");
-    var div_chat = document.getElementById('chat_body');
-    div_chat.innerHTML += "<p class=\"text-left\" style=\"color: #0F5059; font-size:100%; width: 250px;\">" + val + "</p>";
+
+    div_chat.innerHTML += "<p class=\"chat-text-left text-left\" style=\"color: #030c0e; font-size:100%; width: 250px;\">" + val + "</p>";
     shouldScroll = div_chat.scrollTop + div_chat.clientHeight === div_chat.scrollHeight;
+
     if (!shouldScroll) {
       scrollToBottom(div_chat);
     }
@@ -149,13 +188,19 @@
 
 <form id="theForm">
   <div id="mydiv">
-    <div id="mydivheader">Живое общение.</div>
-    <div id="chat_body"
-         style="height: 300px; overflow-y: auto; border: 1px black; " ></div>
-    <div class="input-group">
-      <textarea class="form-control" name="test" id="message_text" rows="2" style="resize:none"></textarea>
-      <button value="Отправить" id="button_send" type="button" class="btn btn-default" onclick="send_form_func()"><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
-      <!--<input value="Отправить" id="button_send" type="button" class="btn btn-default" onclick="send_form_func()">-->
+    <div id="mydivheader">
+      Живое общение с [% RANDOM_CHAT %]
+      <div class='btn btn-xs btn-default login' id="hide"><i class="fa fa-window-minimize fa-10x"></i></div>
+    </div>
+    <div id="hide_chat">
+      <div id="chat_body" style="height: 300px; overflow-y: auto; border: 1px black; ">
+      </div>
+      <div class="input-group">
+        <textarea class="form-control" name="test" id="message_text" rows="2" style="resize:none"></textarea>
+        <button value="Отправить" id="button_send" type="button" class="btn btn-default" onclick="send_form_func()">
+          <i class="fa fa-paper-plane" aria-hidden="true"></i>
+        </button>
+      </div>
     </div>
   </div>
 </form>

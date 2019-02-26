@@ -16,7 +16,7 @@ print "Content-type: text/html\n\n";
 
 our (%FORM, %CONFIG);
 
-%FORM = Base::parse_form();
+%FORM = %{Base::parse_form()};
 do "../../data/config.pl";
 
 # some useful options (see below for full list)
@@ -35,11 +35,13 @@ my $template = Template->new($template_config);
 my $magazines_ = Magazines::Webinterface::magazines_list({%FORM});
 
 my $chat = '';
+
+my $random_chat = $FORM{chat} || 'test';
 my $template_chat = Template->new({
     INCLUDE_PATH => '../../main_templates', # or list ref
     INTERPOLATE  => 1,             # expand "$var" in plain text
      });
-    $template_chat->process('chat.html', { SPEAKER => 'admin', CHAT_IP => $CONFIG{CHAT_IP}}, \$chat);
+    $template_chat->process('chat.html', { SPEAKER => 'admin', RANDOM_CHAT => $random_chat, CHAT_IP => $CONFIG{CHAT_IP}}, \$chat);
 
 
 $template->process('main.html', {

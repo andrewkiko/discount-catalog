@@ -57,8 +57,9 @@ if($FORM{test} == 1){
   $TEMPLATE_ARGS{ACTIVE_1} = 'active';
 }
 elsif($FORM{test} == 2){
+  my $random_chat = $FORM{chat} || 'test';
   my $chat = '';
-  $template->process('chat.html', { SPEAKER => 'user', CHAT_IP => $CONFIG{CHAT_IP}}, \$chat);
+  $template->process('chat.html', { SPEAKER => 'user', RANDOM_CHAT => $random_chat, CHAT_IP => $CONFIG{CHAT_IP}}, \$chat);
   $TEMPLATE_ARGS{CHAT} = $chat;
   $TEMPLATE_ARGS{ACTIVE_2} = 'active';
 }
